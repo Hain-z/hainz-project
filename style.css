@@ -108,9 +108,28 @@ h1 {
   transition: background 200ms ease, box-shadow 200ms ease;
 }
 
+.comments-section {
+  width: min(720px, 100%);
+  background: var(--card);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 0 60px;
+  box-shadow: 0 12px 30px var(--shadow);
+  transition: background 200ms ease, box-shadow 200ms ease;
+}
+
 .contact-section h2 {
   margin: 0 0 16px;
   font-size: 22px;
+}
+
+.comments-section h2 {
+  margin: 0 0 16px;
+  font-size: 22px;
+}
+
+#disqus_thread {
+  min-height: 140px;
 }
 
 .contact-form {
