@@ -5,7 +5,7 @@ const bodyNode = document.getElementById("history-body");
 const topNode = document.getElementById("top-numbers");
 const searchInput = document.getElementById("draw-search");
 
-const API_BASE = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
+const DATA_URL = "https://smok95.github.io/lotto/results/all.json";
 const CACHE_KEY = "lotto-history-cache-v1";
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -16,83 +16,22 @@ const setStatus = (text) => {
   if (statusNode) statusNode.textContent = text;
 };
 
-const getUrl = (drawNo) => `${API_BASE}${drawNo}`;
-
-const fetchDrawByCors = async (drawNo) => {
-  const response = await fetch(getUrl(drawNo));
+const fetchDataset = async () => {
+  const response = await fetch(DATA_URL, { cache: "no-store" });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return response.json();
 };
-
-const fetchDrawByJsonp = (drawNo) =>
-  new Promise((resolve, reject) => {
-    const callback = `lottoJsonpCb_${drawNo}_${Date.now()}`;
-    const script = document.createElement("script");
-    const timer = window.setTimeout(() => {
-      cleanup();
-      reject(new Error("JSONP timeout"));
-    }, 8000);
-
-    const cleanup = () => {
-      clearTimeout(timer);
-      delete window[callback];
-      if (script.parentNode) script.parentNode.removeChild(script);
-    };
-
-    window[callback] = (payload) => {
-      cleanup();
-      resolve(payload);
-    };
-
-    script.onerror = () => {
-      cleanup();
-      reject(new Error("JSONP load error"));
-    };
-    script.src = `${getUrl(drawNo)}&callback=${callback}`;
-    document.body.appendChild(script);
-  });
-
-const fetchDraw = async (drawNo) => {
-  try {
-    return await fetchDrawByCors(drawNo);
-  } catch {
-    return fetchDrawByJsonp(drawNo);
-  }
-};
-
-const isSuccess = (data) => data && data.returnValue === "success";
-
-const findLatestDrawNo = async () => {
-  let low = 1;
-  let high = 1;
-
-  while (high <= 4000) {
-    const data = await fetchDraw(high);
-    if (!isSuccess(data)) break;
-    low = high;
-    high *= 2;
-  }
-
-  let left = low;
-  let right = high - 1;
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
-    const data = await fetchDraw(mid);
-    if (isSuccess(data)) {
-      low = mid;
-      left = mid + 1;
-    } else {
-      right = mid - 1;
-    }
-  }
-  return low;
+const normalizeDate = (value) => {
+  const dt = new Date(value);
+  if (Number.isNaN(dt.getTime())) return value;
+  return dt.toISOString().slice(0, 10);
 };
 
 const normalizeDraw = (raw) => ({
-  drawNo: raw.drwNo,
-  date: raw.drwNoDate,
-  numbers: [raw.drwtNo1, raw.drwtNo2, raw.drwtNo3, raw.drwtNo4, raw.drwtNo5, raw.drwtNo6],
-  bonus: raw.bnusNo,
+  drawNo: Number(raw.draw_no),
+  date: normalizeDate(raw.date),
+  numbers: Array.isArray(raw.numbers) ? raw.numbers.map(Number).slice(0, 6) : [],
+  bonus: Number(raw.bonus_no),
 });
 
 const renderTopNumbers = (draws) => {
@@ -176,31 +115,22 @@ const loadAllDraws = async () => {
     return;
   }
 
-  setStatus("최신 회차를 확인하는 중...");
-  const latest = await findLatestDrawNo();
-  setStatus(`총 ${latest}개 회차 데이터 수집 중...`);
+  setStatus("전체 회차 데이터를 불러오는 중...");
+  const raw = await fetchDataset();
+  if (!Array.isArray(raw) || raw.length === 0) {
+    throw new Error("유효한 회차 데이터가 없습니다.");
+  }
 
-  const result = [];
-  let nextNo = 1;
-  const workerCount = 8;
+  const unique = new Map();
+  for (const item of raw) {
+    const normalized = normalizeDraw(item);
+    if (!normalized.drawNo || normalized.numbers.length !== 6) continue;
+    unique.set(normalized.drawNo, normalized);
+  }
 
-  const worker = async () => {
-    while (nextNo <= latest) {
-      const current = nextNo;
-      nextNo += 1;
-      const data = await fetchDraw(current);
-      if (isSuccess(data)) result.push(normalizeDraw(data));
-      if (current % 40 === 0 || current === latest) {
-        setStatus(`수집 진행: ${Math.min(current, latest)} / ${latest}`);
-      }
-    }
-  };
-
-  await Promise.all(Array.from({ length: workerCount }, worker));
-
-  result.sort((a, b) => a.drawNo - b.drawNo);
+  const result = Array.from(unique.values()).sort((a, b) => a.drawNo - b.drawNo);
   allDraws = result;
-  saveCache(result);
+  saveCache(allDraws);
   renderTopNumbers(allDraws);
   applyFilterAndSort();
   setStatus(`완료: 총 ${allDraws.length}개 회차 데이터`);
