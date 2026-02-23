@@ -1,23 +1,23 @@
 :root {
-  --bg: #f8f7f1;
+  --bg: #f5f6f8;
   --surface: #ffffff;
-  --text: #1a2430;
-  --muted: #4f5f73;
-  --line: #dce4eb;
-  --brand: #0d5f5b;
-  --brand-soft: #d9f0ee;
-  --shadow: 0 16px 38px rgba(10, 30, 48, 0.11);
+  --text: #15202b;
+  --muted: #475569;
+  --line: #d6dee6;
+  --brand: #0f766e;
+  --brand-soft: #d7f3ef;
+  --shadow: 0 10px 24px rgba(10, 30, 48, 0.08);
 }
 
 body.dark {
-  --bg: #11202d;
-  --surface: #1b2c3d;
-  --text: #f2f6fa;
-  --muted: #c9d6e3;
-  --line: #2f4457;
-  --brand: #6ed4cb;
-  --brand-soft: #163944;
-  --shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
+  --bg: #111a24;
+  --surface: #182434;
+  --text: #edf2f7;
+  --muted: #c4d1df;
+  --line: #2a3a4d;
+  --brand: #5fd4c8;
+  --brand-soft: #153743;
+  --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -29,14 +29,16 @@ body {
   font-family: "Noto Sans KR", "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(1200px 500px at 100% -15%, #d6efe8 0%, transparent 60%),
-    radial-gradient(700px 300px at 0 -10%, #f1d7c6 0%, transparent 60%),
+    radial-gradient(1200px 500px at 100% -15%, #deefe8 0%, transparent 60%),
+    radial-gradient(700px 300px at 0 -10%, #f0e2d6 0%, transparent 60%),
     var(--bg);
-  line-height: 1.65;
+  line-height: 1.72;
+  font-size: 16px;
 }
 
 a {
   color: var(--brand);
+  text-underline-offset: 2px;
 }
 
 .container {
@@ -46,10 +48,10 @@ a {
 
 .site-header {
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
   position: sticky;
   top: 0;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
   z-index: 20;
 }
 
@@ -64,6 +66,7 @@ a {
   text-decoration: none;
   font-weight: 800;
   color: var(--text);
+  letter-spacing: 0.01em;
 }
 
 .main-nav {
@@ -75,7 +78,13 @@ a {
 
 .main-nav a {
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
+  color: var(--text);
+  opacity: 0.9;
+}
+
+.main-nav a:hover {
+  opacity: 1;
 }
 
 .theme-toggle {
@@ -83,8 +92,9 @@ a {
   border-radius: 999px;
   background: var(--surface);
   color: var(--text);
-  padding: 0.45rem 0.9rem;
+  padding: 0.5rem 0.95rem;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .hero {
@@ -103,7 +113,7 @@ a {
 h1 {
   margin: 0.6rem 0 0;
   line-height: 1.25;
-  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
 }
 
 .lead {
@@ -152,9 +162,10 @@ button.button {
   background: var(--brand);
   border: none;
   border-radius: 10px;
-  padding: 0.7rem 1.1rem;
+  padding: 0.72rem 1.15rem;
   font-weight: 700;
   cursor: pointer;
+  line-height: 1.2;
 }
 
 .button.secondary {
@@ -201,7 +212,7 @@ button.button {
 
 .article-meta {
   color: var(--muted);
-  font-size: 0.93rem;
+  font-size: 0.95rem;
 }
 
 .tool-wrap {
@@ -243,7 +254,14 @@ textarea {
   border-radius: 10px;
   background: var(--surface);
   color: var(--text);
-  padding: 0.65rem 0.75rem;
+  padding: 0.68rem 0.78rem;
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--brand) 55%, transparent);
+  outline-offset: 1px;
 }
 
 .inline-controls {
@@ -265,7 +283,7 @@ textarea {
   border: 1px solid var(--line);
   background: var(--surface);
   border-radius: 12px;
-  padding: 0.9rem;
+  padding: 1rem;
 }
 
 .latest-card p {
@@ -282,7 +300,7 @@ textarea {
   border: 1px solid var(--line);
   background: var(--surface);
   border-radius: 12px;
-  padding: 0.65rem;
+  padding: 0.72rem;
   display: grid;
   gap: 0.2rem;
 }
@@ -299,6 +317,9 @@ textarea {
 .table-wrap {
   margin-top: 1.3rem;
   overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
 }
 
 table {
@@ -310,12 +331,21 @@ table {
 th,
 td {
   border-bottom: 1px solid var(--line);
-  padding: 0.55rem 0.5rem;
+  padding: 0.68rem 0.62rem;
   text-align: left;
+  font-size: 0.96rem;
 }
 
 thead th {
-  background: var(--brand-soft);
+  background: color-mix(in srgb, var(--brand-soft) 70%, var(--surface));
+}
+
+tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--brand-soft) 18%, var(--surface));
+}
+
+tbody tr:hover {
+  background: color-mix(in srgb, var(--brand-soft) 30%, var(--surface));
 }
 
 .pagination {
@@ -340,6 +370,7 @@ thead th {
     order: 3;
     margin-left: 0;
     width: 100%;
+    gap: 0.7rem;
   }
 
   .card-grid {
@@ -352,5 +383,12 @@ thead th {
 
   .pagination {
     flex-wrap: wrap;
+  }
+
+  .tool-wrap,
+  .article-wrap,
+  .panel {
+    padding: 1.1rem;
+    border-radius: 14px;
   }
 }
