@@ -1,65 +1,82 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-adsense-account" content="ca-pub-8085950030726828" />
-  <title>Lotto Number Generator</title>
-  <link href='/style.css' rel='stylesheet'>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8085950030726828"
-    crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="로또 정보, 확률 기초, 예산 관리 원칙을 다루는 독립 콘텐츠 사이트">
+  <meta name="google-site-verification" content="REPLACE_WITH_SEARCH_CONSOLE_TOKEN">
+  <meta name="google-adsense-account" content="ca-pub-8085950030726828">
+  <title>로또 인사이트 랩 | 확률 기반 가이드</title>
+  <link rel="stylesheet" href="/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8085950030726828" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header class="top-bar">
-    <h1>Lotto Number Generator</h1>
-    <button id="theme-toggle" aria-label="Toggle dark or light mode">Dark mode</button>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/">Lotto Insight Lab</a>
+      <nav class="main-nav" aria-label="주요 메뉴">
+        <a href="/guides/lotto-basics.html">확률 기초</a>
+        <a href="/guides/budget-plan.html">예산 계획</a>
+        <a href="/guides/scam-checklist.html">사기 예방</a>
+        <a href="/tools/lotto-generator.html">번호 도구</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="다크 모드 전환">다크 모드</button>
+    </div>
   </header>
-  <button id="generator-btn">Generate Numbers</button>
-  <div id="numbers-container"></div>
-  <section class="contact-section" aria-labelledby="contact-title">
-    <h2 id="contact-title">Partnership Inquiry</h2>
-    <form class="contact-form" action="https://formspree.io/f/xgollyvo" method="POST">
-      <label class="field">
-        <span>Company</span>
-        <input type="text" name="company" placeholder="Company name" required />
-      </label>
-      <label class="field">
-        <span>Contact Name</span>
-        <input type="text" name="name" placeholder="Your name" required />
-      </label>
-      <label class="field">
-        <span>Email</span>
-        <input type="email" name="email" placeholder="you@example.com" required />
-      </label>
-      <label class="field field-full">
-        <span>Message</span>
-        <textarea name="message" placeholder="Tell us about the partnership" rows="5" required></textarea>
-      </label>
-      <button class="submit-btn" type="submit">Send Inquiry</button>
-    </form>
-  </section>
-  <section class="comments-section" aria-labelledby="comments-title">
-    <h2 id="comments-title">Comments</h2>
-    <div id="disqus_thread"></div>
-  </section>
-  <script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-    (function() { // DON'T EDIT BELOW THIS LINE
-    var d = document, s = d.createElement('script');
-    s.src = 'https://productbuilder-h2czfstdhm.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">독립 정보 사이트</p>
+        <h1>로또를 더 안전하고 합리적으로 이용하기 위한 가이드</h1>
+        <p class="lead">
+          이 사이트는 당첨 보장이나 유료 리딩을 제공하지 않습니다. 확률 이해, 예산 통제, 사기 예방 등
+          책임 있는 참여를 돕는 검증 가능한 정보만 제공합니다.
+        </p>
+      </div>
+    </section>
+
+    <section class="container section">
+      <h2>핵심 콘텐츠</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3><a href="/guides/lotto-basics.html">로또 확률의 기본 구조 이해</a></h3>
+          <p>조합 수, 기대값, 자주 나오는 오해를 실제 계산으로 설명합니다.</p>
+        </article>
+        <article class="card">
+          <h3><a href="/guides/budget-plan.html">과몰입을 막는 월간 예산 계획</a></h3>
+          <p>지출 상한, 기록 방식, 중단 기준을 포함한 실전 운영 템플릿을 제공합니다.</p>
+        </article>
+        <article class="card">
+          <h3><a href="/guides/scam-checklist.html">복권 사기 체크리스트</a></h3>
+          <p>당첨 미끼 문자, 수수료 선입금 요구 등 실제 피해 패턴을 정리했습니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section">
+      <h2>무료 도구</h2>
+      <article class="feature-box">
+        <h3>로또 번호 생성기</h3>
+        <p>
+          테스트용 난수 도구입니다. 당첨 확률을 높이지 않으며, 번호 선택 자동화가 필요할 때만 사용하세요.
+        </p>
+        <a class="button" href="/tools/lotto-generator.html">도구 열기</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <p>© <span id="year"></span> Lotto Insight Lab</p>
+      <nav aria-label="하단 메뉴">
+        <a href="/about.html">사이트 소개</a>
+        <a href="/contact.html">문의하기</a>
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+      </nav>
+    </div>
+  </footer>
+  <script defer src="/site.js"></script>
 </body>
 </html>
