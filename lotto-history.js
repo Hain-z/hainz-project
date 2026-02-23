@@ -4,6 +4,7 @@ const statusNode = document.getElementById("history-status");
 const bodyNode = document.getElementById("history-body");
 const topNode = document.getElementById("top-numbers");
 const searchInput = document.getElementById("draw-search");
+const searchBtn = document.getElementById("draw-search-btn");
 const latestNode = document.getElementById("latest-draw");
 const prevBtn = document.getElementById("page-prev-btn");
 const nextBtn = document.getElementById("page-next-btn");
@@ -18,6 +19,8 @@ let allDraws = [];
 let latestFirst = true;
 let currentPage = 1;
 let filteredDraws = [];
+let activeSearchDrawNo = 0;
+let isLoading = false;
 
 const setStatus = (text) => {
   if (statusNode) statusNode.textContent = text;
@@ -112,11 +115,10 @@ const renderCurrentPage = () => {
 };
 
 const applyFilterAndSort = ({ resetPage = false } = {}) => {
-  const keyword = Number(searchInput?.value || 0);
   let data = [...allDraws];
   data.sort((a, b) => (latestFirst ? b.drawNo - a.drawNo : a.drawNo - b.drawNo));
 
-  if (keyword > 0) data = data.filter((item) => item.drawNo === keyword);
+  if (activeSearchDrawNo > 0) data = data.filter((item) => item.drawNo === activeSearchDrawNo);
   filteredDraws = data;
   if (resetPage) currentPage = 1;
   renderCurrentPage();
@@ -141,8 +143,9 @@ const loadCache = () => {
 };
 
 const loadAllDraws = async () => {
-  if (!loadBtn) return;
-  loadBtn.disabled = true;
+  if (isLoading) return;
+  isLoading = true;
+  if (loadBtn) loadBtn.disabled = true;
 
   const cached = loadCache();
   if (cached && cached.length > 0) {
@@ -151,7 +154,8 @@ const loadAllDraws = async () => {
     renderTopNumbers(allDraws);
     applyFilterAndSort({ resetPage: true });
     setStatus(`캐시 데이터 사용: 총 ${allDraws.length}개 회차`);
-    loadBtn.disabled = false;
+    if (loadBtn) loadBtn.disabled = false;
+    isLoading = false;
     return;
   }
 
@@ -175,16 +179,19 @@ const loadAllDraws = async () => {
   renderTopNumbers(allDraws);
   applyFilterAndSort({ resetPage: true });
   setStatus(`완료: 총 ${allDraws.length}개 회차 데이터`);
-  loadBtn.disabled = false;
+  if (loadBtn) loadBtn.disabled = false;
+  isLoading = false;
 };
 
 if (loadBtn) {
   loadBtn.addEventListener("click", async () => {
     try {
+      localStorage.removeItem(CACHE_KEY);
       await loadAllDraws();
     } catch (error) {
       setStatus(`데이터 로드 실패: ${error.message}`);
-      loadBtn.disabled = false;
+      if (loadBtn) loadBtn.disabled = false;
+      isLoading = false;
     }
   });
 }
@@ -197,9 +204,18 @@ if (sortBtn) {
   });
 }
 
+const runSearch = () => {
+  activeSearchDrawNo = Number(searchInput?.value || 0);
+  applyFilterAndSort({ resetPage: true });
+};
+
+if (searchBtn) {
+  searchBtn.addEventListener("click", runSearch);
+}
+
 if (searchInput) {
-  searchInput.addEventListener("input", () => {
-    applyFilterAndSort({ resetPage: true });
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") runSearch();
   });
 }
 
@@ -216,3 +232,13 @@ if (nextBtn) {
     renderCurrentPage();
   });
 }
+
+window.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadAllDraws();
+  } catch (error) {
+    setStatus(`데이터 로드 실패: ${error.message}`);
+    if (loadBtn) loadBtn.disabled = false;
+    isLoading = false;
+  }
+});
