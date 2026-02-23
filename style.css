@@ -157,6 +157,12 @@ button.button {
   cursor: pointer;
 }
 
+.button.secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
 .site-footer {
   margin-top: 2rem;
   padding: 1.4rem 0;
@@ -240,6 +246,63 @@ textarea {
   padding: 0.65rem 0.75rem;
 }
 
+.inline-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: end;
+}
+
+.stats-wrap {
+  margin-top: 1.2rem;
+}
+
+.chip-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 0.65rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.chip strong {
+  font-size: 0.96rem;
+}
+
+.chip span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.table-wrap {
+  margin-top: 1.3rem;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.55rem 0.5rem;
+  text-align: left;
+}
+
+thead th {
+  background: var(--brand-soft);
+}
+
 @media (max-width: 880px) {
   .site-header .container {
     flex-wrap: wrap;
@@ -253,5 +316,9 @@ textarea {
 
   .card-grid {
     grid-template-columns: 1fr;
+  }
+
+  .chip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
