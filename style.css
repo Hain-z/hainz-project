@@ -257,6 +257,21 @@ textarea {
   margin-top: 1.2rem;
 }
 
+.latest-wrap {
+  margin-top: 1.2rem;
+}
+
+.latest-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 0.9rem;
+}
+
+.latest-card p {
+  margin: 0.25rem 0;
+}
+
 .chip-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -303,6 +318,19 @@ thead th {
   background: var(--brand-soft);
 }
 
+.pagination {
+  margin-top: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.pagination .button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 @media (max-width: 880px) {
   .site-header .container {
     flex-wrap: wrap;
@@ -320,5 +348,9 @@ thead th {
 
   .chip-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pagination {
+    flex-wrap: wrap;
   }
 }

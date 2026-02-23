@@ -49,6 +49,13 @@
       <p id="history-status" class="article-meta">아직 데이터를 불러오지 않았습니다.</p>
     </div>
 
+    <section class="latest-wrap" aria-labelledby="latest-title">
+      <h2 id="latest-title">최신 회차 번호</h2>
+      <div id="latest-draw" class="latest-card">
+        데이터를 불러오면 최신 회차 정보가 표시됩니다.
+      </div>
+    </section>
+
     <section class="stats-wrap" aria-labelledby="stats-title">
       <h2 id="stats-title">가장 많이 나온 번호 Top 10</h2>
       <div id="top-numbers" class="chip-grid"></div>
@@ -71,6 +78,11 @@
           </tr>
         </tbody>
       </table>
+      <div class="pagination">
+        <button id="page-prev-btn" class="button secondary" type="button">이전</button>
+        <span id="page-indicator" class="article-meta">0 / 0</span>
+        <button id="page-next-btn" class="button secondary" type="button">다음</button>
+      </div>
     </section>
   </main>
 
